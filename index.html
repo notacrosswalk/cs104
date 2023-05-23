@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS104 Short Notes</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="cs104-short-notes">CS104 Short Notes</h1>
+<h2 id="lecture-1">Lecture 1</h2>
+<h3 id="computer-architecture-and-computer-organization">Computer Architecture and Computer Organization</h3>
+<ul>
+<li>Computer Architecture: It acts as the interface between hardware and software. It involves logic (instruction sets, addressing modes, data types, cache optimization).</li>
+<li>Computer Organization : It deals with the components of a connection in a system. It involves physical components (circuit design, adders, signals, peripherals).</li>
+</ul>
+<h3 id="functional-components-of-a-computer">Functional Components of a Computer</h3>
+<ul>
+<li>CPU (ALU, Control Unit, Registers)</li>
+<li>Main Memory</li>
+<li>Input/Output (I/O)</li>
+<li>System Interconnection (System bus, address bus, data bus)</li>
+</ul>
+<h2 id="lecture-2">Lecture 2</h2>
+<h3 id="technologies-building-the-computer">Technologies building the computer</h3>
+<ul>
+<li>Vacuum tubes</li>
+<li>Transistors</li>
+<li>SSI (&lt;= 100 devices on a chip)</li>
+<li>MSI (100 - 3,000)</li>
+<li>LSI (3,000 - 100,000)</li>
+<li>VLSI (100,000 - 100,000,000)</li>
+<li>ULSI (&gt; 100,000,000)</li>
+</ul>
+<h3 id="computer-generations">Computer Generations</h3>
+<p>ENIAC: First general purpose computer</p>
+<ul>
+<li>First (Vacuum tubes)</li>
+<li>Second (Tranistors)</li>
+<li>Third (Integrated Circuits)</li>
+<li>Fourth (Microprocessors)</li>
+<li>Fifth (AI concepts)</li>
+</ul>
+<h3 id="moores-law">Moore’s Law</h3>
+<blockquote>
+<p>"The number of transistors that can be placed inexpensively on an<br>
+integrated circuit doubles approximately every 18 months.”<br>
+– <cite> Gordon E. Moore, Co-Founder, Intel. </cite></p>
+</blockquote>
+<h3 id="performance">Performance</h3>
+<ul>
+<li>A micro operation is an elementary hardware operation that can be carried out in one clock cycle.  A machine instruction typically consists of several micro operations.</li>
+<li><code>ET = IC x CPI x C</code></li>
+</ul>
+<h2 id="lecture-3">Lecture 3</h2>
+<ul>
+<li>RISC architecture gives better performance than CISC.</li>
+<li>Clock cycle time depends on hardware technology.</li>
+<li>CPI depends on the compiler, program used, ISA and CPU organization.</li>
+<li>IC depends on the program, compiler and the ISA.</li>
+<li><code>Speedup = Old ET ÷ New ET</code></li>
+</ul>
+<h2 id="lecture-4">Lecture 4</h2>
+<ul>
+<li><code>CPI = Summation of Frequency of Instruction Type i x CPI of Instruction Type i</code></li>
+<li>A <strong>benchmark</strong> is a set of standard programs used in comparison.</li>
+<li><code>MIPS = IC / ET * 10^-6 = Frequency (in MHz) / CPI</code> depends on instruction set. Higher MIPS rating might not mean better performance. It is valid two compare two processors only if the same program, ISA and compiler are used. This implies that the Instruction Count and the machine code must stay the same across both devices being compared.</li>
+<li>MFLOPS : Million Floating Point Operations Per Second. Different floating point operations take different times. Compilers without floating point operations have a rating of 0.</li>
+</ul>
+<h2 id="lecture-5">Lecture 5</h2>
+<h3 id="levels-of-programs-used-for-benchmarking">Levels of programs used for benchmarking</h3>
+<ul>
+<li>Real applications: SPEC (System Performance Evaluation Corporation) is the most popular and industry standard set of benchmarks (e.g. SPEC95, SPEC CPU2000).</li>
+<li>Kernel Benchmarks: Key computationally intensive programs are extracted from real programs (e.g. fast fourier transformation, matrix factorization) (e.g. Livermore loops, Linpack)</li>
+<li>Toy Benchmarks: small pieces of code (e.g. sieve of eratosthenes, quicksort)</li>
+<li>Synthetic Benchmarks (e.g. Whetstone, Dhrystone)</li>
+<li>In SPEC benchmarks, a SPARCstation is taken as the reference machine.</li>
+</ul>
+<h3 id="summarizing-relative-performances">Summarizing relative performances</h3>
+<ul>
+<li>Total Execution Time</li>
+<li>Arithmetic Mean</li>
+<li>Weighted Execution Time</li>
+<li>Weighted Arithmetic Mean (WAM)</li>
+<li>Normalized Execution Time</li>
+<li>Normalized Geometric Mean</li>
+</ul>
+<p><strong>Note:</strong> Normalized geometric means stay consistent (their ratios stay same) with the choice of the reference machines. Hence, arithmetic means shouldn’t be used to average normalized execution times. <em>Drawback:</em> - Geometric means do not predict execution times.</p>
+<h2 id="lecture-6">Lecture 6</h2>
+<ul>
+<li>Amdahl’s Law states a fundamental limitation of parallel computing.</li>
+<li>It is known as the <strong>Law of Diminishing Returns</strong>.</li>
+<li>The fractions we consider in Amdahl’s Law are in terms of the execution time.</li>
+<li>It is also referred to as quantitative principles in design.</li>
+</ul>
+<h2 id="lecture-7">Lecture 7</h2>
+<ul>
+<li>Memory Address Register: Holds the address of the memory location to be accessed.</li>
+<li>Memory Data Register: Holds the data that is being written into memory, or will receive the data being read out from memory.</li>
+<li>Program Counter (PC): Holds the memory address of the next instruction to be executed. It is automatically incremented to point to the next instruction to be executed whenever a program is executed.</li>
+<li>Instruction Register (IR): Temporarily holds an instruction that has been fetched from memory. It needs to be decoded and it also contains information about the location of the data.</li>
+<li>Bus: Group of lines that serves as a connecting path for several devices</li>
+</ul>
+<h2 id="lecture-8">Lecture 8</h2>
+<h3 id="memory-basics">Memory Basics</h3>
+<ul>
+<li>Bit: A single binary digit</li>
+<li>Nibble: 4 bits</li>
+<li>Byte: 8 bits</li>
+<li>Word: Varies from computer to computer, usually 32 to 64 bits</li>
+<li><code>M x N memory</code>: Memory consisting of M locations each of N bits</li>
+<li>Memory is often byte organized with each byte having an address</li>
+</ul>
+<h3 id="memory-sizes">Memory Sizes</h3>
+
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Power of 2</th>
+<th>Power of 10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8 bits or 1 Byte (B)</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kilobyte (KB)</td>
+<td>10</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Megabyte (MB)</td>
+<td>20</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Gigabyte (GB)</td>
+<td>30</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Terabyte (TB)</td>
+<td>40</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Petabyte (PB)</td>
+<td>50</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Exabyte (EB)</td>
+<td>60</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Zettabyte (ZB)</td>
+<td>70</td>
+<td>21</td>
+</tr>
+</tbody>
+</table><h3 id="byte-ordering-conventions">Byte Ordering Conventions</h3>
+<ul>
+<li>Little Endian: LSB goes in the lower address memory and the MSB is in the higher address memory.</li>
+<li>Big Endian: LSB goes in the higher address memory and the MSB is in the lower address memory.</li>
+</ul>
+<h3 id="assemblers-and-compilers">Assemblers and Compilers</h3>
+<ul>
+<li>A cross assembler or cross compiler generates machine code for one machine while running on another machine.</li>
+</ul>
+<h2 id="lecture-9">Lecture 9</h2>
+<h3 id="ieee-754-floating-point-representation">IEEE-754 Floating Point Representation</h3>
+<ul>
+<li><code>Radix point</code></li>
+<li>Floating point representation represents reals in scientific notation.</li>
+<li>Fixed point is prone to a loss in precision when two large numbers are divided while floating point employs a sliding window of precision.</li>
+<li><code>F = (-1)^S * M * 2^E</code></li>
+<li><code>M</code> is called mantissa and it lies in the range [1.0, 2.0]. It is encoded with an implied leading <code>1</code>.</li>
+<li><code>E</code> ranges from 1 to 254. All 0s and 1s are reserved for special numbers.</li>
+<li><code>Single Precision</code>: E - 8 bits, M - 23 bits, Bias - 127</li>
+<li><code>Double Precision</code>: E - 11 bits, M - 53 bits, Bias - 1023</li>
+<li><code>Bias = 2^(k-1) - 1</code> for a <code>k-bit</code> exponent.</li>
+<li>Biasing is done so that exponent can be both +ve and -ve, in two’s complement.</li>
+<li><strong>Note:</strong> For both -ve and +ve exponents, the bias is added. For instance, the exponent -7 would become 120 after biasing in the IEEE-754 single precision format.</li>
+</ul>
+<h2 id="lecture-10">Lecture 10</h2>
+<h3 id="addition">Addition</h3>
+<ul>
+<li>Shift the number with the smaller exponent by <code>E1 - E2</code> positions.</li>
+<li>Compute the addition with the exponent being <code>max(E1, E2)</code>. Determine the sign.</li>
+<li>Normalize the result if necessary.</li>
+</ul>
+<h3 id="subtraction">Subtraction</h3>
+<ul>
+<li>Shift the number with the smaller exponent by <code>E1 - E2</code> positions.</li>
+<li>Find the two’s complement of the smaller number.</li>
+<li>Compute the addition of the two’s complement and the other number with the exponent being <code>max(E1, E2)</code>. Determine the sign. Discard the carry.</li>
+<li>Normalize the result if necessary.</li>
+</ul>
+<h3 id="multiplication">Multiplication</h3>
+<ul>
+<li>Shift the number with the smaller exponent by <code>E1 - E2</code> positions.</li>
+<li>Compute the multiplication with the exponent being <code>E1 + E2</code>. Determine the sign.</li>
+<li>Normalize the result if necessary.</li>
+</ul>
+<h3 id="division">Division</h3>
+<ul>
+<li>Do not shift either number.</li>
+<li>Compute the division.</li>
+<li>The exponent will be <code>E1 - E2</code>.</li>
+<li>Normalize the result if necessary.</li>
+</ul>
+<h2 id="lecture-11">Lecture 11</h2>
+<ul>
+<li>Instruction Set Architecture: The complete collection of instructions that are understood by a CPU</li>
+<li>ISA is an abstraction layer provided to software and the programmer</li>
+</ul>
+<h3 id="isa-encoding">ISA Encoding</h3>
+<ul>
+<li>Fixed width: Easy to decode. Example: MIPS etc.</li>
+<li>Variable length: Complex but take less space in cache and memory. Example: Intel x86 etc.</li>
+</ul>
+<h3 id="alternatives-of-instruction-set">Alternatives of Instruction Set</h3>
+<h4 id="reduced-instruction-set-computer-risc">Reduced Instruction Set Computer (RISC)</h4>
+<ul>
+<li>Fixed width instructions</li>
+<li>Simple</li>
+<li>Semantic gap w.r.t HLL is more</li>
+<li>Less number of addressing modes</li>
+<li>Examples: MIPS, ARM etc.</li>
+</ul>
+<h4 id="complex-instruction-set-computer-cisc">Complex Instruction Set Computer (CISC)</h4>
+<ul>
+<li>Variable length instructions</li>
+<li>Complex</li>
+<li>Semantic gap w.r.t HLL is less</li>
+<li>More number of addressing modes</li>
+<li>Examples: Intel x86</li>
+</ul>
+<h3 id="instruction-format">Instruction Format</h3>
+<ul>
+<li>Operation Code (Opcode)</li>
+<li>Operand(s): Specifying the source(s) and destination(s) of the operation</li>
+</ul>
+<h3 id="number-of-addresses-in-an-instruction">Number of addresses in an instruction</h3>
+<ul>
+<li>Zero Address Instruction: Stack based computers; Evaluation of a postfix expression.</li>
+<li>One Address Instruction: Accumulator is implied.</li>
+<li>Two Address Instruction: Results can be stored in not just the accumulator.</li>
+<li>Three Address Instruction</li>
+</ul>
+<h2 id="lecture-12">Lecture 12</h2>
+<ul>
+<li>Implied Addressing: Used in stack-based and accumulator-based models.</li>
+<li>Immediate Addressing: Operand is specified implying no memory accesses and hence the execution is very fast. This supports only a limited range of values.</li>
+<li>Direct Addressing: Address field contains address of operand. <code>Effective Address (EA) = Operand Value</code>. No additional calculations to work out EA. Limited address space. Single memory reference to access data.</li>
+<li>Indirect Addressing: Address field points to a memory cell that contains the address of the operand. Slower, multiple memory accesses but more address space. May be nested, multilevel, cascaded.</li>
+<li>Register Addressing: Address field has a register that contains the operand. Similar to direct addressing. Very fast execution. No memory accesses. Limited address space (number of registers).</li>
+<li>Register Indirect Addressing: <code>EA = (R)</code>. Register’s contents point to memory cell that contains the operand. One fewer memory access than indirect addressing.</li>
+<li>Displacement Addressing: <code>EA = A + (R)</code>. Address field holds the register with the base address and the displacement (immediately addressed) or vice versa. <strong>Base-register</strong> addressing is a kind of displacement addressing.</li>
+</ul>
+<h2 id="lecture-13">Lecture 13</h2>
+<h3 id="mips-addressing-modes">MIPS Addressing Modes</h3>
+<ul>
+<li>Register addressing</li>
+<li>Base addressing</li>
+<li>Immediate addressing</li>
+<li>PC-relative addressing <em>(offset of next instruction; PC+4 of current instruction; eg: beq $t1, $t2, Label)</em></li>
+</ul>
+<h3 id="mips">MIPS</h3>
+<ul>
+<li><em>Microprocessor without Interlocking Pipeline Stages</em></li>
+<li>MIPS is a  3 address architecture</li>
+<li>It is an implementation of the RISC architecture</li>
+<li><strong>MIPS R2000 ISA</strong></li>
+<li>load store machine with large register set</li>
+<li>fixed instruction width of 32 bits</li>
+</ul>
+<h3 id="mips-data-types">MIPS Data Types</h3>
+<p><img src="https://i.imgur.com/UqxSoku.png" alt="MIPS Data Types"></p>
+<h3 id="mips-instruction-formats">MIPS Instruction Formats</h3>
+<ul>
+<li>R-type (Register type) Instructions</li>
+</ul>
+<p><img src="https://i.imgur.com/T6L4f3z.png" alt="R-type instructions"><br>
+<img src="https://i.imgur.com/S8tAz0x.png" alt="R-type instructions"></p>
+<ul>
+<li>I-type (Immediate type) Instructions</li>
+</ul>
+<p><img src="https://i.imgur.com/iw8rXu9.png" alt="I-type instructions"><br>
+<img src="https://i.imgur.com/qePFakK.png" alt="I-type instructions"></p>
+<ul>
+<li>J-type (Jump type) Instructions</li>
+</ul>
+<p><img src="https://i.imgur.com/GYernK3.png" alt="J-type instructions"><br>
+<img src="https://i.imgur.com/Y34o5hg.png" alt="J-type instructions"></p>
+<h3 id="types-of-mips-instructions">Types of MIPS Instructions</h3>
+<ul>
+<li>Load and store<br>
+<em>MIPS is a register-register or load-store architecture. The main memory is accessed only through load and store operations.</em><br>
+<img src="https://i.imgur.com/806Ha5G.png" alt="Load and store operations"></li>
+<li>Arithmetic and logical
+<ul>
+<li>Operate on registers only</li>
+<li>Classified as
+<ol>
+<li>ALU immediate</li>
+<li>ALU 2-operand</li>
+<li>ALU 3-operand</li>
+<li>Shift</li>
+<li>Multiply and Divide</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/FVYVYHv.png" alt="ALU Instructions"></p>
+<ul>
+<li>The multiply and divide operations produce twice as many bits (64-bit product and 32-bit quotient and 32-bit remainder respectively) .</li>
+<li>For multiplication, the lower half of the product is stored in LO and the upper half of the product is stored in HI.</li>
+<li>For division, the quotient is loaded into LO and the remainder is loaded into HI.</li>
+</ul>
+<p><img src="https://i.imgur.com/AMH53a7.png" alt="Multiply and Divide operations"></p>
+<ul>
+<li>Jump and branch</li>
+</ul>
+<p><img src="https://i.imgur.com/lB6Y8ya.png" alt="Jump and branch instructions"></p>
+<ul>
+<li>Others and coprocessor
+<ul>
+<li>Other instructions
+<ul>
+<li><em>Exceptions : syscall</em></li>
+<li><em>Conditional Move : MOVF, MOVN, MOVT, MOVZ</em></li>
+<li><em>Prefetch : PREF</em></li>
+<li><em>NOP - NOP</em></li>
+</ul>
+</li>
+<li>Coprocessor instruction
+<ul>
+<li>MIPS defines four coprocessors.</li>
+<li>CP0 - <em>VM system and exception handling</em></li>
+<li>CP1 - <em>floating point coprocessor</em></li>
+<li>CP2 - <em>for some specific implementation</em></li>
+<li>CP3 - <em>future extensions</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-14">Lecture 14</h2>
+<h3 id="registers">Registers</h3>
+<ul>
+<li>MIPS has 32 numbers of 32-bit integer registers (<code>$0</code> to <code>$31</code>) and 32 numbers of 32-bit floating point registers (<code>$f0</code> through <code>$f31</code>).</li>
+<li>Registers that should not be used:
+<ul>
+<li>kernel registers <code>$k0</code> and <code>$k1</code> <em>used by the OS</em></li>
+<li>assembler temporary <code>$at</code> <em>used by the assembler</em></li>
+<li>global pointer <code>$gp</code> <em>points into the middle of a 64K block of memory in the heap</em></li>
+<li>exception program counter <code>$epc</code></li>
+</ul>
+</li>
+<li>Miscellaneous registers
+<ul>
+<li>program counter <code>$pc</code></li>
+<li>status register <code>$status</code></li>
+<li>cause <code>$cause</code> (<em>exception cause register</em>)</li>
+<li><code>$hi</code></li>
+<li><code>$lo</code></li>
+</ul>
+</li>
+<li>Floating Point Registers
+<ul>
+<li>The 32 single precision registers can also be used as 16 double precision registers</li>
+<li>f0, f2, f4, … , f30
+<ul>
+<li>Here, f0 means f0 and f1</li>
+<li>f2 means f2 and f3</li>
+<li>Even numbered floating point registers can be used to achieve 64-bit double precision</li>
+</ul>
+</li>
+<li>They reside in the C1 coprocessor</li>
+</ul>
+</li>
+<li>Register naming conventions
+<ul>
+<li><code>$zero</code> <em>constant zero</em></li>
+<li><code>$v0</code>, <code>$v1</code> to pass parameters or return values</li>
+<li><code>$a0</code> to <code>$a3</code> for arguments</li>
+<li><code>$t0</code> to <code>$t7</code> and <code>$t8</code> to <code>$t9</code> temporary registers</li>
+<li><code>$s0</code> to <code>$s7</code> save registers saved by callee</li>
+<li><code>$ra</code> return address</li>
+</ul>
+</li>
+</ul>
+<h3 id="system-call">System Call</h3>
+<ul>
+<li>The register <code>$v0</code> is used in MIPS system call.</li>
+</ul>
+<p><img src="https://i.imgur.com/hYUk6rp.png" alt="System call"><br>
+<img src="https://i.imgur.com/J1KZY4r.png" alt="System call"></p>
+<h3 id="data-movement-instructions">Data Movement Instructions</h3>
+<ul>
+<li>Load and store</li>
+</ul>
+<p><img src="https://i.imgur.com/39pCi67.png" alt="Load and store instructions"></p>
+<ul>
+<li>Move</li>
+</ul>
+<p><img src="https://i.imgur.com/OeSeT8j.png" alt="Move instructions"></p>
+<h3 id="other-operations">Other operations</h3>
+<ul>
+<li>Arithmetic : <em>add, div, abs etc.</em></li>
+<li>Logical : <em>and, rol etc.</em></li>
+<li>Control
+<ul>
+<li>Unconditional : <code>j &lt;label&gt;</code>
+<ul>
+<li>For example, <code>j next</code></li>
+</ul>
+</li>
+<li>Conditional : <code>b&lt;condition&gt; rsrc, src, &lt;label&gt;</code>
+<ul>
+<li>For example, <code>beq $t1, $t2, loop</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-15">Lecture 15</h2>
+<ul>
+<li>A subroutine is a coherent sequence of instructions that carries out a well defined function.</li>
+<li>Subroutines make programs easier to write and maintain and they can be reused many times without needing to write the same set of instructions many times.</li>
+</ul>
+<h3 id="when-a-subroutine-is-called">When a subroutine is called</h3>
+<ul>
+<li>The address of the next instruction is stored in the stack.</li>
+<li><code>$pc</code> is loaded with the starting address of the subroutine.</li>
+<li>The CPU performs a fetch-execute a cycle at the first instruction of the subroutine.</li>
+</ul>
+<h3 id="when-a-subroutine-is-done">When a subroutine is done</h3>
+<ul>
+<li>The old ‘next instruction’ address is recovered from the stack.</li>
+<li><code>$pc</code> is loaded with this value.</li>
+<li>The CPU performs a fetch-execute cycle at the next instruction in the program after the subroutine call.</li>
+</ul>
+<h3 id="mips-function-call">MIPS Function Call</h3>
+<ul>
+<li>Parameters : <code>$a0</code> to <code>$a3</code></li>
+<li>Return values : <code>$v0</code> to <code>v1</code></li>
+<li>Return control to : <code>$ra</code></li>
+<li>Transfer control to a function
+<ul>
+<li><code>jal label</code></li>
+<li><code>jal</code>  stands for ‘jump and link’</li>
+<li>jumps to label’s instruction</li>
+<li>stores return address in <code>$ra</code> (PC + 4)</li>
+</ul>
+</li>
+<li>Return control to caller
+<ul>
+<li><code>jr $ra</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/R1egw64.png" alt="Control flow in MIPS : The University of Washington"></p>
+<h3 id="registers-1">Registers</h3>
+<ul>
+<li>Caller saved registers
+<ul>
+<li><code>$t0</code> to <code>$t9</code>, <code>$v0</code> to <code>$v1</code> and <code>$a0</code> to <code>$a3</code></li>
+</ul>
+</li>
+<li>Callee saved registers
+<ul>
+<li><code>$s0</code> to <code>$s7</code>, <code>$gp</code>, <code>$sp</code>, <code>$fp</code>, <code>$ra</code></li>
+<li>restore values before returning</li>
+</ul>
+</li>
+<li>Stack pointer
+<ul>
+<li><code>$sp</code> points to the last location on the stack</li>
+</ul>
+</li>
+</ul>
+<h3 id="stack-segment">Stack Segment</h3>
+<ul>
+<li>A program has three segments when it is loaded into the memory by the Operating System.
+<ul>
+<li>Text segment containing the machine language code.</li>
+<li>Data segment where space is allocated for constants and variables.</li>
+<li>Stack segment that has an area that can be allocated and freed by functions.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/102zpsI.png" alt="Memory segments"></p>
+<ul>
+<li>The space that a function allocates on the stack is called a stack frame or an activation record.</li>
+<li>The stack grows downward in terms of memory addresses.</li>
+<li>The OS initializes the <code>$sp</code> register with a valid address to point to the top of the stack.</li>
+<li>To allocate a stack frame of n bytes, decrement the stack pointer by n at the top of the function.
+<ul>
+<li><code>addi $sp, $sp, -n</code> # n must be a constant number of bytes</li>
+</ul>
+</li>
+<li>To free a stack frame of n bytes, increment the stack pointer by n at the top of the function.
+<ul>
+<li><code>addi $sp,$sp, n</code> # n must be a constant number of bytes</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/FXOFLYO.png" alt="Stack Frame Example"></p>
+<h2 id="lecture-16">Lecture 16</h2>
+<ul>
+<li>Registers <code>$sp</code> and <code>$fp</code> must be preserved if a new stack frame is allocated by a function.</li>
+<li><code>$ra</code> must be preserved if a function makes a call to another function.</li>
+</ul>
+<p><img src="https://i.imgur.com/K9vSDfh.png" alt="An example"></p>
+<h2 id="lecture-17">Lecture 17</h2>
+<ul>
+<li>Pseudoinstructions are assembler macros.</li>
+</ul>
+<ol>
+<li><code>blt</code> branch less than
+<ul>
+<li><code>blt $t0, $t1, loop</code> is converted to<br>
+<code>slt $at, $t0, $t1</code><br>
+<code>bne $at, $zero, loop</code></li>
+</ul>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/rVPzO1V.png" alt="enter image description here"></p>
+<ol start="2">
+<li><code>li</code> load immediate
+<ul>
+<li>loads an immediate value into a register</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://i.imgur.com/Jg0yRPv.png" alt="li"></p>
+<ul>
+<li>Other pseudoinstructions<br>
+<img src="https://i.imgur.com/RLBMhRD.png" alt="Other MIPS Pseudoinstructions"></li>
+</ul>
+</div>
+</body>
+
+</html>
