@@ -549,6 +549,172 @@ integrated circuit doubles approximately every 18 months.”<br>
 <li>Other pseudoinstructions</li>
 </ul>
 <p><img src="https://i.imgur.com/RLBMhRD.png" alt="Other MIPS Pseudoinstructions"></p>
+<h2 id="lecture-18">Lecture 18</h2>
+<ul>
+<li>Instructions are stored in the main memory.</li>
+<li>MIPS instructions are 32 bits long.</li>
+<li>Instruction Memory is addressed in terms of 4 bytes.</li>
+<li>All instructions start from a memory address that is a multiple of 4, implying that the last two digits in its binary representation are 00.</li>
+<li>Instructions are executed in a fetch, decode and execute cycle forever till power off or system failure.</li>
+<li>Types of data movement
+<ul>
+<li>Register to Register</li>
+<li>Register to ALU</li>
+<li>ALU to Register</li>
+</ul>
+</li>
+<li>The ALU temporary register (Z), the bus and the registers help in data movement.</li>
+<li>Registers Y and Z are never used by instructions explicitly.</li>
+<li>The registers, the ALU and the interconnecting bus are collectively referred to as the datapath.</li>
+<li>The instruction decoder and control unit is responsible for performing the actions specified by the instruction loaded into IR. The decoder generates all the control signals in the proper sequence required to execute the instruction specified by the IR.</li>
+<li>A three-bus architecture allows three parallel data transfer operations to be carried out. Less numbers of cycles would be required to execute an instruction compared to a single-bus architecture.</li>
+<li>A register <code>Ri</code> typically has two control signals: <code>Ri(in)</code> and <code>Ri(out)</code>.</li>
+<li>Consider the instruction <code>Move R1, R2</code>
+<ul>
+<li>We write it as <code>T1: R2(out), R1(in)</code></li>
+</ul>
+</li>
+<li>Consider the instruction <code>ADD R1, R2</code> <code># R1 = R1 + R2</code>
+<ul>
+<li>We write it as<br>
+<code>T1: R1(out), Y(in)</code><br>
+<code>T2: R2(out), SelectY, ADD, Z(in)</code><br>
+<code>T3: Z(out), R1(in)</code></li>
+</ul>
+</li>
+<li>MDR control signals:</li>
+</ul>
+<p><img src="https://i.imgur.com/hfitK49.png" alt="MDR control signals"></p>
+<ul>
+<li>When the processor sends a read request, it has to wait until the data is read from the memory and written into MDR. A control signal called Memory Function Complete (MFC) is used for this purpose. When this signal is 1, it indicates that the read/write operation has been completed.</li>
+</ul>
+<h2 id="lecture-19">Lecture 19</h2>
+<ul>
+<li>The processor must generate proper sequence of control signals to execute the instructions.</li>
+<li>Two design approaches:
+<ul>
+<li>Hardwired control unit design</li>
+<li>Microprogrammed control unit design</li>
+</ul>
+</li>
+</ul>
+<h3 id="hardwired-control-unit">Hardwired Control Unit</h3>
+<ul>
+<li>The sequence of operations carried out is determined by the wiring of the logic elements and hence it is named a <em>hardwired</em> control unit.</li>
+</ul>
+<ol>
+<li>Clock is connected to a control step counter.</li>
+<li>The control step counter is connected to a step decoder to generate the steps.</li>
+<li>The encoder encodeds the information received from the step decoder, the instruction decoder and whether there are any external inputs (such as <code>MFC</code>) and condition codes. The encoder generates the necessary control signals.<br>
+<img src="https://i.imgur.com/uqTZbS0.png" alt="Hardwired Control Unit"></li>
+</ol>
+<ul>
+<li>The step decoder generates a separate signal line for each step in the control sequence.</li>
+<li>The step decoder is designed depending on the maximum steps required for an instruction.
+<ul>
+<li>If there are 10 steps required, then a 4x16 decoder is used.</li>
+</ul>
+</li>
+<li>Similarly, the instruction decoder is designed to select one among the total set of instructions.
+<ul>
+<li>If there are a maximum of 100 instructions present in an ISA then a 7 x 128 instruction decoder is used.</li>
+</ul>
+</li>
+<li>At every clock cycle the <code>RUN</code> signal is used to increment the counter by one.
+<ul>
+<li>When <code>RUN</code> is 0 the counter stops counting.</li>
+<li>This signal is needed when <code>WMFC</code> is used.</li>
+</ul>
+</li>
+<li>The <code>END</code> signal starts a new instruction.
+<ul>
+<li>It resets the control step counter to its starting value.</li>
+</ul>
+</li>
+<li>This approach of control unit design is fast but limited to the complexity of the instruction set that is implemented.</li>
+<li>Additional Reading:</li>
+</ul>
+<p><img src="https://i.imgur.com/VnFIvut.png" alt="Control signals for three different instructions"><br>
+<img src="https://i.imgur.com/fKdFBRn.png" alt="Generation of control signals for the above example"></p>
+<h2 id="lecture-20">Lecture 20</h2>
+<p><img src="https://i.imgur.com/VdBuv6H.png" alt="Microprogrammed control unit"></p>
+<ul>
+<li>The <code>Control Store (CS)</code> stores the microroutines for all instructions of an ISA.</li>
+<li>The sequence of steps corresponding to the control sequence of a machine instruction is the microroutine.</li>
+<li>Each sequence of steps is a <code>control word (CW)</code> whose individual bits represent the various control signals.</li>
+<li>Individual control words in a microroutine are called microinstructions.</li>
+<li>The control unit generates the control signals for an instruction by sequentially reading CWs of corresponding microroutines from the CS.</li>
+<li>The microPC is used to read CWs sequentially from the CS.</li>
+<li>Every time a new instruction is loaded into the IR, output of the <code>starting address generator</code> is loaded into the microPC.</li>
+<li>The microPC is automatically incremented by the clock causing successive microinstructions to be read from the CS.</li>
+</ul>
+<h3 id="control-signal-encoding-scheme">Control Signal Encoding Scheme</h3>
+<h4 id="horizontal-micro-instruction-encoding">Horizontal Micro-Instruction Encoding</h4>
+<ul>
+<li>Each control signal is represented by a bit in the microinstruction/control word.</li>
+<li>Fewer control store words, with more bits per word.</li>
+<li>Multiple bits in the control word can be 1, supporting parallel activation of several micro-operations in a single time step.</li>
+<li>Supports unlimited parallelism among microinstructions.</li>
+<li>Disadvantages
+<ul>
+<li>Size of the control memory is large</li>
+<li>Cost of implementation is higher</li>
+</ul>
+</li>
+</ul>
+<h4 id="vertical-micro-instruction-encoding">Vertical Micro-Instruction Encoding</h4>
+<ul>
+<li>Each control word represents a single microinstruction in encoded form.</li>
+<li>More control store words, with fewer bits per word.</li>
+<li>Supports strictly sequential execution of microinstructions.</li>
+<li>We encode k control signals in a m-bit word where <code>k &lt;= 2^m</code>.</li>
+<li>At most one control signal can be activated in a time step.</li>
+<li>Advantages
+<ul>
+<li>Much smaller word size in the memory</li>
+<li>Low cost of implementation</li>
+</ul>
+</li>
+<li>Disadvantages
+<ul>
+<li>More than one control signal cannot be activated at a time</li>
+<li>Requires sequential activation of control signals and hence more number of time steps</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/ygXqsFu.png" alt="Vertical Micro-Instruction Encoding"></p>
+<h4 id="digital-micro-instruction-encoding">Digital Micro-Instruction Encoding</h4>
+<ul>
+<li>The control signals are grouped into groups and encoded.</li>
+<li>Within a group, at most one control signal can be activated in a time step.</li>
+<li>Parallelism across groups is allowed.</li>
+<li>Advantages
+<ul>
+<li>Maximum parallelism as required by the microprograms can be supported.</li>
+<li>Word size of control memory is less than that for horizontal microinstruction encoding.</li>
+<li>It is used in practice.</li>
+</ul>
+</li>
+<li>Disadvantages
+<ul>
+<li>Multiple decoders (although smaller in size) are required.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/RCBXsLg.png" alt="Diagonal Micro-Instruction Encoding"></p>
+<ul>
+<li>Example: If there are 100 control signals in a processor data path, the control word sizes are:
+<ul>
+<li>Horizontal Encoding: 100 bits</li>
+<li>Vertical Encoding: [log2 100] = 7 bits</li>
+<li>Diagonal Encoding: 22 bits
+<ul>
+<li>(When the control signals are divided into 5 groups containing 25, 15, 40, 5 and 15 control signals respectively)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </body>
 
