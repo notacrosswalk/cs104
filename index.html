@@ -715,6 +715,92 @@ integrated circuit doubles approximately every 18 months.”<br>
 </ul>
 </li>
 </ul>
+<h2 id="lecture-21">Lecture 21</h2>
+<h3 id="mips-field-names">MIPS Field Names</h3>
+<ul>
+<li><code>op</code> : opcode</li>
+<li><code>rs</code> : first register source operand</li>
+<li><code>rt</code> : second register source operand</li>
+<li><code>rd</code> : register destination operand</li>
+<li><code>shamt</code> : shift amount for shift instructions, zero otherwise</li>
+<li><code>fucnt</code> : function code for the specific variant of the operation denoted by opcode</li>
+</ul>
+<hr>
+<ul>
+<li>Register bank has two read ports and one write port.</li>
+</ul>
+<h3 id="mips-execution-cycle">MIPS Execution Cycle</h3>
+<ul>
+<li>Instruction Fetch <code>IF</code></li>
+<li>Instruction Decode <code>ID</code> (or Register Fetch)</li>
+<li>Execution <code>EX</code> (or Effective Address Calculation)</li>
+<li>Memory Access <code>MEM</code> or Branch Completion</li>
+<li>Register Write-back <code>WB</code></li>
+</ul>
+<hr>
+<ol>
+<li><code>IF</code>
+<ul>
+<li>IR &lt;- MEM[PC]</li>
+<li>NPC &lt;- PC + 4</li>
+</ul>
+</li>
+<li><code>ID</code>
+<ul>
+<li>Instruction Decoding is done in parallel with reading the register operands <code>rs</code> and <code>rt</code> as these fields are in a fixed location in the instruction format.</li>
+<li>In a similar way, the immediate data can be sign extended.</li>
+</ul>
+</li>
+<li><code>EX</code>
+<ul>
+<li>Effective Address is calculated for a load/store or branch statement.</li>
+<li>ALU operations are performed</li>
+</ul>
+</li>
+<li><code>MEM</code>
+<ul>
+<li>PC is updated to NPC or to some other value if there is a branch statement that satisfies a condition</li>
+<li>Memory is accessed for load/store instructions</li>
+</ul>
+</li>
+<li><code>WB</code>
+<ul>
+<li>Result is written back from the ALU or the <code>LMD</code> register depending on the instruction.</li>
+</ul>
+</li>
+</ol>
+<h2 id="lecture-22">Lecture 22</h2>
+<ul>
+<li>MUX control signals are usually 0 or 1<br>
+<img src="https://i.imgur.com/3pbkgcu.png" alt="MIPS Data Path without pipelining"><br>
+<img src="https://i.imgur.com/fPNAprp.png" alt="Control signals in the data path"></li>
+</ul>
+<h2 id="lecture-23">Lecture 23</h2>
+<ul>
+<li>Ideal speedup in a k-stage pipelined processor, the ideal speedup is k for a large number of instructions.</li>
+<li>Consider executing <code>n</code> instructions on a <code>k-stage</code> pipelined processor.
+<ul>
+<li>Speedup = <code>kn / ((k-1) + n)</code></li>
+</ul>
+</li>
+<li><code>IF</code> and <code>MEM</code> conflict
+<ul>
+<li>Two memory accesses per clock cycle</li>
+<li>Separate instruction and data caches</li>
+<li>Peak memory bandwidth is increased 5 times</li>
+</ul>
+</li>
+<li><code>ID</code> and <code>WB</code> conflict
+<ul>
+<li>Simultaneous reads and writes might result in clashes and hence during the first half of the clock cycle, the write is performed and the read is performed during the second half</li>
+</ul>
+</li>
+<li><code>PC</code> has to be updated in the IF stage itself to fetch the next instruction</li>
+<li>Register setup time: Minimum time the register input must be held stable before the active clock edge arrives</li>
+<li>Clock period is chosen based on the clock skew and jitter and the slowest stage in the pipeline</li>
+</ul>
+<h2 id="lecture-24">Lecture 24</h2>
+<p><img src="https://i.imgur.com/u80Ucpf.png" alt="MIPS32 Pipeline"></p>
 </div>
 </body>
 
