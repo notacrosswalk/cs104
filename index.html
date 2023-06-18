@@ -801,6 +801,52 @@ integrated circuit doubles approximately every 18 months.”<br>
 </ul>
 <h2 id="lecture-24">Lecture 24</h2>
 <p><img src="https://i.imgur.com/u80Ucpf.png" alt="MIPS32 Pipeline"></p>
+<h2 id="lecture-25">Lecture 25</h2>
+<ul>
+<li><strong>Hazards</strong>: situations that prevent the next instruction from executing in the designated clock cycle
+<ul>
+<li>Structural Hazards : a required resource is busy; resource conflicts</li>
+<li>Data Hazard : need to wait for previous instruction to complete its data read/write due to a data dependency</li>
+<li>Control Hazard: deciding on control action depends on previous instruction pc changes</li>
+</ul>
+</li>
+<li>We install stall cycles in the pipeline to deal with hazards.</li>
+<li>Calculation of performance degradation
+<ul>
+<li>Speedup = <code>ET_np</code> / <code>ET_p</code></li>
+<li>Speedup = <code>CPI_np</code> / <code>CPI_p</code></li>
+<li>Speedup = <code>Ideal CPI x Pipeline Depth</code> / <code>Ideal CPI + Pipeline stall cycles per instruction</code></li>
+</ul>
+</li>
+<li>We make use of separate instruction and data caches to prevent memory access structural hazards.</li>
+<li>We deal with register data hazards using two methods
+<ul>
+<li>Data forwarding/bypassing</li>
+<li>Concurrent register access</li>
+</ul>
+</li>
+<li>Two load/store operations cannot lead to a data hazard</li>
+<li>But, load operations followed by using that data can cause unavoidable pipeline stalls that cannot be solved using data forwarding alone.</li>
+<li>We use a hardware addition called a pipeline interlock that detects the hazard and stalls the pipeline until the hazard is cleared.</li>
+<li><em>Instruction Issue</em> : Process of allowing an instruction to move from ID to EX</li>
+<li>Pipeline scheduling is used to eliminate data hazards and it is done behind the scenes by the compiler. It increases the number of registers used but raises performance levels as well. If scheduling does not eliminate a hazard, a <code>NOP</code> is inserted.</li>
+<li><em>Delayed load</em> : 	<code>LOAD</code> instruction requiring that the following instruction do not use the loaded value</li>
+<li><em>Load delay slot</em> : Pipeline slot after a <code>LOAD</code></li>
+<li>Types of Data Hazards
+<ul>
+<li>Read After Write (RAW) : only one possible in MIPS</li>
+<li>Write After Read (WAR)</li>
+<li>Write After Write (WAW)</li>
+</ul>
+</li>
+<li>Control Hazard : Branch instruction causes 3 stall cycles (<em>branch penalty</em>)</li>
+<li>Reducing the branch penalty to a single stall
+<ul>
+<li>Add special comparison logic to determine whether the branch is to be taken by the end of the ID cycle</li>
+<li>Both possible PC values are computed in the IF stage using a separate adder</li>
+</ul>
+</li>
+</ul>
 </div>
 </body>
 
