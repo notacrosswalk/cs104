@@ -847,6 +847,30 @@ integrated circuit doubles approximately every 18 months.”<br>
 </ul>
 </li>
 </ul>
+<h2 id="lecture-29">Lecture 29</h2>
+<p><strong>Techniques to reduce the branch penalty</strong></p>
+<ol>
+<li>Insert stall cycles</li>
+<li>Predict that the branch is not taken
+<ul>
+<li>if the prediction is wrong we stop the pipeline and restart the fetch</li>
+</ul>
+</li>
+<li>Predict that the branch is taken
+<ul>
+<li>no advantage as 1 stall cycle is required irrespective of the prediction being true or false</li>
+</ul>
+</li>
+<li>Delayed branch
+<ul>
+<li>compiler fills branch-delay slots (1 in MIPS32)</li>
+<li>instructions in the branch-delay slot are executed irrespective of the outcome of the branch</li>
+<li>multiple <code>PC</code>s (<code>n + 1</code> =&gt; 2 in MIPS) are required to correctly restore the state when an interrupt occurs</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p>No more notes Lecture 30 onwards.</p>
 </div>
 </body>
 
